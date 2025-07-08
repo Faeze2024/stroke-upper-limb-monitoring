@@ -96,6 +96,4 @@ For major changes, please open an issue first to discuss what you’d like to ad
 MIT License
 
 ---
-
-### 🌱 Author
-Built as part of a research project on intelligent upper limb posture monitoring in stroke patients.
+Test push from local
