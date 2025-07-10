@@ -89,11 +89,3 @@ The script also:
 ## 🤝 Contributing
 Feel free to fork this repository and open pull requests!
 For major changes, please open an issue first to discuss what you’d like to add.
-
----
-
-## 📄 License
-MIT License
-
-A computer vision tool for movement analysis in post-stroke rehabilitation
-
