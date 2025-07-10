@@ -95,5 +95,5 @@ For major changes, please open an issue first to discuss what you’d like to ad
 ## 📄 License
 MIT License
 
----
-Test push from local
+A computer vision tool for movement analysis in post-stroke rehabilitation
+
