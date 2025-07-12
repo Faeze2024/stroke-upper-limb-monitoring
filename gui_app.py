@@ -1,27 +1,13 @@
+# gui_app.py یا main.py
+
 import cv2
-import mediapipe as mp
-import numpy as np
-import csv
 import time
+from src.pose_estimation import get_landmarks
+from src.angle_calculation import calculate_angle
+from src.data_saver import init_csv, save_angles
 
-mp_pose = mp.solutions.pose # type: ignore
-pose = mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5)
-
-def calculate_angle(a, b, c):
-    a = np.array(a)
-    b = np.array(b)
-    c = np.array(c)
-    ba = a - b
-    bc = c - b
-    cosine_angle = np.dot(ba, bc) / (np.linalg.norm(ba) * np.linalg.norm(bc))
-    angle = np.arccos(np.clip(cosine_angle, -1.0, 1.0))
-    return np.degrees(angle)
-
-# آماده‌سازی فایل CSV
 csv_filename = 'joint_angles.csv'
-with open(csv_filename, mode='w', newline='') as f:
-    writer = csv.writer(f)
-    writer.writerow(['timestamp', 'left_shoulder', 'right_shoulder', 'left_elbow', 'right_elbow'])
+init_csv(csv_filename)
 
 cap = cv2.VideoCapture(0)
 
@@ -31,12 +17,10 @@ try:
         if not ret:
             break
 
-        image_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        results = pose.process(image_rgb)
-
-        if results.pose_landmarks:
+        landmarks = get_landmarks(frame)
+        if landmarks:
             h, w, _ = frame.shape
-            lm = results.pose_landmarks.landmark
+            lm = landmarks
 
             left_shoulder = [lm[11].x * w, lm[11].y * h]
             left_elbow = [lm[13].x * w, lm[13].y * h]
@@ -48,20 +32,15 @@ try:
             right_wrist = [lm[16].x * w, lm[16].y * h]
             right_hip = [lm[24].x * w, lm[24].y * h]
 
-            # زاویه‌ها
             left_elbow_angle = calculate_angle(left_shoulder, left_elbow, left_wrist)
             right_elbow_angle = calculate_angle(right_shoulder, right_elbow, right_wrist)
             left_shoulder_angle = calculate_angle(left_hip, left_shoulder, left_elbow)
             right_shoulder_angle = calculate_angle(right_hip, right_shoulder, right_elbow)
 
-            # ذخیره در CSV
             timestamp = time.time()
-            with open(csv_filename, mode='a', newline='') as f:
-                writer = csv.writer(f)
-                writer.writerow([timestamp, left_shoulder_angle, right_shoulder_angle,
-                                 left_elbow_angle, right_elbow_angle])
+            save_angles(csv_filename, timestamp, left_shoulder_angle, right_shoulder_angle,
+                        left_elbow_angle, right_elbow_angle)
 
-            # نمایش روی تصویر
             cv2.putText(frame, f"L-Elbow: {int(left_elbow_angle)}", (30, 50),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,255,0), 2)
             cv2.putText(frame, f"R-Elbow: {int(right_elbow_angle)}", (30, 90),
@@ -72,7 +51,7 @@ try:
                         cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2)
 
         cv2.imshow("Pose with Angles", frame)
-        if cv2.waitKey(1) & 0xFF == 27:  # ESC
+        if cv2.waitKey(1) & 0xFF == 27:
             break
 
 finally:
