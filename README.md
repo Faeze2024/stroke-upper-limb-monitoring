@@ -41,6 +41,46 @@ pip install -r requirements.txt
 
 ---
 
+
+---
+
+⚙️ How to Activate the Virtual Environment (Windows)
+
+In this project folder, there is a prepared script named activate_venv.bat.
+
+To activate the Python virtual environment, simply double-click on this file.
+
+📦 Steps to set up and activate:
+
+If you have not created the virtual environment yet, open PowerShell or CMD in your project folder and run:
+
+python -m venv venv
+
+This will create a venv folder containing the virtual environment.
+
+Activate the virtual environment:
+
+Just double-click on:
+
+activate_venv.bat
+
+You should see your terminal prompt change to something like (venv) indicating the environment is active.
+
+❌ To deactivate:
+
+Simply type:
+
+deactivate
+
+✅ Notes:
+
+The activate_venv.bat file automatically sets the correct execution policy and then runs activate_venv.ps1.
+
+If you move or rename your venv folder, update the script accordingly.
+
+This makes it super easy to activate your environment without needing to manually type commands every time!
+
+
 ## 🚀 How to use
 
 Run the main script to start capturing and analyzing movements:
@@ -81,7 +121,6 @@ stroke-upper-limb-monitoring/
 ├── README.md
 └── .gitignore
 ```
-
 ---
 
 ## ✅ TODO
