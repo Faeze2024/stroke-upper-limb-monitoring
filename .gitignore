@@ -1,8 +1,35 @@
+# 📦 Virtual environments
 venv/
+.venv/
+
+# ⚙️ IDE / Editor settings
+.vscode/
+.idea/
+
+# 🐍 Python byte-compiled / cache files
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-.DS_Store
-.vscode/
+*.py[cod]
+*$py.class
+
+# 📊 Output and generated data
+data/*.csv
+plots/*.png
 output/
+
+# 📄 Reports and generated docs
+*.pdf
+
+# 📝 Logs
+*.log
+
+# 💻 OS files
+.DS_Store
+Thumbs.db
+
+# 🗑 Temporary / backup files
+*.tmp
+*.temp
+*.bak
