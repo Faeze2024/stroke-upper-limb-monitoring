@@ -1,26 +1,32 @@
 # 🧠 Stroke Upper Limb Monitoring
 
-A computer vision-based tool to monitor and analyze upper limb movements in post-stroke patients, built with Python and MediaPipe BlazePose.
+A computer vision-based tool to monitor and analyze upper limb movements in post-stroke patients, built with Python, MediaPipe BlazePose, and Streamlit.
 
 ---
 
 ## 📌 About this project
 
-Stroke survivors often suffer from limited range of motion in their upper limbs.\
-This project aims to automatically detect and track key joint angles (shoulder, elbow, wrist) during rehabilitation exercises, helping clinicians and researchers analyze movement quality over time.
+Stroke survivors often suffer from limited range of motion in their upper limbs.  
+This project automatically detects and tracks key joint angles (shoulder, elbow, wrist) during rehabilitation exercises.  
+It helps clinicians and researchers analyze movement quality over time by:
 
-We extract joint coordinates from live webcam or images, calculate angles, store them, and visualize motion data in real time.\
-Additionally, the tool can compare actual patient motion data against a predefined reference pattern to track progress.
+- Extracting joint coordinates from live webcam or uploaded videos
+- Calculating angles
+- Storing them in CSV
+- Visualizing motion data in real time
+- Generating PDF reports
 
 ---
 
 ## ✨ Features
 
-- Live tracking of upper limb keypoints (shoulder, elbow, wrist)
-- Calculation and storage of joint angles over time
-- Real-time plotting of joint angles
-- Comparison against reference movement curves
-- Simple Python interface for extending or customizing
+- ✅ Live tracking of upper limb keypoints (shoulder, elbow, wrist)
+- 📐 Calculation and storage of joint angles over time
+- 📊 Real-time plotting of joint angles
+- 📸 Capture and save snapshot images during exercise
+- 📝 Generate PDF reports from tracked data
+- 🔄 Multi-threaded processing with thread-safe design (Lock) for better performance
+- 🧩 Modular code structure for easier extension or customization
 
 ---
 
@@ -41,69 +47,62 @@ pip install -r requirements.txt
 
 ---
 
+## ⚙️ How to activate the virtual environment (Windows)
+
+We included a script named `activate_venv.bat`.
+
+📦 Steps:
+
+1. If you haven't created the virtual environment yet:
+
+```bash
+python -m venv venv
+```
+
+2. Activate:
+
+Just double-click on:
+```
+activate_venv.bat
+```
+
+✅ You'll see your prompt change to `(venv)`
+
+To deactivate, just type:
+```
+deactivate
+```
 
 ---
 
-⚙️ How to Activate the Virtual Environment (Windows)
-
-In this project folder, there is a prepared script named activate_venv.bat.
-
-To activate the Python virtual environment, simply double-click on this file.
-
-📦 Steps to set up and activate:
-
-If you have not created the virtual environment yet, open PowerShell or CMD in your project folder and run:
-
-python -m venv venv
-
-This will create a venv folder containing the virtual environment.
-
-Activate the virtual environment:
-
-Just double-click on:
-
-activate_venv.bat
-
-You should see your terminal prompt change to something like (venv) indicating the environment is active.
-
-❌ To deactivate:
-
-Simply type:
-
-deactivate
-
-✅ Notes:
-
-The activate_venv.bat file automatically sets the correct execution policy and then runs activate_venv.ps1.
-
-If you move or rename your venv folder, update the script accordingly.
-
-This makes it super easy to activate your environment without needing to manually type commands every time!
-
-
 ## 🚀 How to use
 
-Run the main script to start capturing and analyzing movements:
+Run the Streamlit app:
 
 ```bash
-python main.py
+streamlit run gui_app.py
 ```
 
-By default, it:
+Features:
 
-- Captures from webcam
-- Detects keypoints
-- Calculates angles
-- Saves data as CSV
-- Draws live plot of angles vs time
+- Choose between webcam or uploaded video
+- Start processing to:
+  - Capture frames
+  - Detect landmarks
+  - Calculate angles
+  - Save data as CSV
+- 📊 Visualize angles over time in a real-time chart
+- 📸 Take snapshot of current frame
+- 📝 Generate PDF report with one click
 
 ---
 
 ## 📊 Output
 
 - CSV file with timestamps and calculated joint angles
-- Real-time matplotlib chart of movement
-- Optional comparison with predefined reference curves for analysis
+- Real-time matplotlib chart
+- Saved snapshot images
+- PDF report from tracked data
 
 ---
 
@@ -111,25 +110,31 @@ By default, it:
 
 ```
 stroke-upper-limb-monitoring/
-├── data/                # Saved CSV files
-├── plots/               # Generated plots
-├── src/                 # Python scripts and modules
-│   ├── pose_estimation.py
+├── data/                  # Saved CSV files & snapshots
+├── plots/                 # Generated plots
+├── src/                   # Core Python modules
 │   ├── angle_calculation.py
-│   └── plotting.py
+│   ├── camera_stream.py
+│   ├── data_saver.py
+│   ├── pose_estimation.py
+│   ├── report_generator.py
+│   ├── snapshot.py
+│   └── video_processor.py
+├── gui_app.py             # Streamlit main app
 ├── requirements.txt
 ├── README.md
 └── .gitignore
 ```
+
 ---
 
 ## ✅ TODO
 
-- Add GUI or web dashboard for easier use
-- Support for full upper body keypoints
-- Save and compare sessions per user/patient
-- Generate PDF reports for therapists
-- Export data in common formats (Excel, JSON)
+- Fully live video preview while processing
+- Add multiprocessing or asyncio to improve performance on large videos
+- Add docstrings & auto-generated documentation
+- Export data in more formats (Excel, JSON)
+- User authentication and session management
 
 ---
 
@@ -138,6 +143,7 @@ stroke-upper-limb-monitoring/
 - Python
 - MediaPipe BlazePose
 - OpenCV
+- Streamlit
 - NumPy
 - Matplotlib
 
@@ -149,5 +155,4 @@ This project is licensed under the MIT License.
 
 ---
 
-If you like this project, feel free to ⭐️ the repo or contribute!
-
+⭐ If you like this project, please star the repo or contribute!
